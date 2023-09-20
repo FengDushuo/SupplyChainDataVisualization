@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>网络流量数据可视化系统</title>
+    <meta name="Keywords" content="网络流量数据上传，数据可视化" />
+    <meta name="Description" content="," />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link rel="stylesheet" type="text/css" href="../static/css/sequences.css"/>
+    <link href="../static/css/csvfunction.css" type="text/css" rel="stylesheet" />
+    <script src="../static/js/user.js" type="text/javascript"></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <style>
+
+      .node {
+        cursor: pointer;
+      }
+      
+      .node:hover {
+        stroke: #000;
+        stroke-width: 1.5px;
+      }
+      
+      .node--leaf {
+        fill: white;
+      }
+      
+      .label {
+        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-anchor: middle;
+        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+      }
+      
+      .label,
+      .node--root,
+      .node--leaf {
+        pointer-events: none;
+      }
+      
+      </style>
+    
+  </head>
+  
+  <body>
+    <div id="section" init="true" class="section section1">
+      <header class="header">
+        <div class="wrap">
+          <h1 class="fl">
+            <a href="/user" class="fl logo">
+              <img class="usericon" src="../static/img/user_head.jpg" alt="用户头像" width="49" height="49" />
+              <div class='userdata'>
+                <label>
+                  <div class='icon'>
+                    <img alt="" src='../static/img/user_icon_copy.png'>
+                    {{user[1]}}
+                  </div>
+                </label>
+                <label>
+                    <div class='icon'>
+                      <img alt="" src='../static/img/email_icon.png'>
+                      {{user[3]}}
+                    </div>
+                </label>
+                </div>
+            </a>
+          </h1>
+          <div class="fr">
+            <div class="top">
+              <span class="call">
+              </span>
+              <span class="call_tel">
+                188-9680-9086
+              </span>
+              <a>
+                <span class="email">
+                </span>
+                1369162653@qq.com
+              </a>
+              <a class="ewm">
+                <span class="weixin">
+                </span>
+                冯读硕
+                <img src="../static/img/weixin_code.jpg"
+                width="258" height="258" alt="微信" />
+              </a>
+            </div>
+            <nav class="nav">
+              <ul class="fix">
+                <li id="menu1">
+                  <a href="/user">
+                    系统首页
+                  </a>
+                </li>
+                <li id="menu2">
+                  <a href="/cases">
+                    实验案例
+                  </a>
+                </li>
+              </ul>
+              <span class="nav_icon">
+              </span>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <script type="text/javascript">
+        document.getElementById("menu2").className = "on";
+      </script>
+    </div>
+
+    <div class="news_tab">
+      <ul class="fix">
+        <li class="cyan">
+          <a href="/attacktype" >
+            <h2>
+              原材料
+            </h2>
+            <p class="eg">
+              Raw Materials
+            </p>
+          </a>
+        </li>
+        <li class="purple">
+          <a href="/attackips" >
+            <h2>
+              模具制作
+            </h2>
+            <p class="eg">
+              Mold Manufacturing
+            </p>
+          </a>
+        </li>
+        <li class="green">
+          <a href="/timestampip" >
+            <h2>
+              注塑生产
+            </h2>
+            <p class="eg">
+              Injection Molding Production
+            </p>
+          </a>
+        </li>
+        <li class="red">
+          <a href="/timestampother" >
+            <h2>
+              电子电路
+            </h2>
+            <p class="eg">
+              Electronic Circuit
+            </p>
+          </a>
+        </li>
+        <li class="blue">
+          <a href="/otherother">
+            <h2>
+              展览展会
+            </h2>
+            <p class="eg">
+              Exhibition
+            </p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="function_tab">
+        
+        <div class="fix" id="function_ul">
+            <div class="cyan" id="function_li">
+                <div class="input_filed"> -->
+                  
+                  <div id="main">
+                    <!-- 定义左上角页面访问序列的容器 -->
+                    <div id="sequence"></div>
+                    <!--定义图例所在容器 .以及切换是否显示的按钮-->
+                    <div id="sidebar">
+                      <input type="checkbox" id="togglelegend"> Legend<br/>
+                      <div id="legend" style="visibility: hidden;"></div>
+                    </div>
+                    <!-- 定义光芒图的容器 -->
+                    <div id="chart" width="750" height="750" style="border-radius: 50%;">
+                      <!-- 定义鼠标悬停时，解释说明文字所在的容器 ,默认隐藏-->
+                      <!-- <div id="explanation" style="visibility: hidden;">
+                        <span id="percentage"></span><br/>
+                        of visits begin with this sequence of pages
+                        
+                      </div> -->
+                      <div id="zoomcircle" width="300" height="300"></div>
+                      <!-- <svg id="zoomcircle" width="300" height="300"></svg> -->
+                    </div>
+                  </div>
+                  
+                    
+                </div>
+            </div>
+        </div>
+
+        
+       
+    </div>
+
+    <script type="text/javascript">
+      // Hack to make this example display correctly in an iframe on bl.ocks.org
+      d3.select(self.frameElement).style("height", "700px");
+    </script> 
+    <!-- <script type="text/javascript" src="../static/js/ZoomableCirclePacking.js"></script> -->
+    <script type="text/javascript" src="../static/js/SequencesSunburst.js"></script>
+
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+
+    <script type="text/javascript">
+      var dom = document.getElementById('zoomcircle');
+      var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+      });
+      var app = {};
+      var ROOT_PATH = 'http://127.0.0.1:8000';
+      var option;
+  
+      $.when(
+        $.get(ROOT_PATH + '/static/data/option-view.json'),
+        $.getScript('https://fastly.jsdelivr.net/npm/d3-hierarchy@2.0.0/dist/d3-hierarchy.min.js')).done(function (res) {run(res[0]); });
+  
+      function run(rawData) {
+        const dataWrap = prepareData(rawData);
+        initChart(dataWrap.seriesData, dataWrap.maxDepth);
+      }
+      function prepareData(rawData) {
+        const seriesData = [];
+        let maxDepth = 0;
+        function convert(source, basePath, depth) {
+          if (source == null) {
+            return;
+          }
+          if (maxDepth > 5) {
+            return;
+          }
+          maxDepth = Math.max(depth, maxDepth);
+          seriesData.push({
+            id: basePath,
+            value: source.$count,
+            depth: depth,
+            index: seriesData.length
+          });
+          for (var key in source) {
+            if (source.hasOwnProperty(key) && !key.match(/^\$/)) {
+              var path = basePath + '.' + key;
+              convert(source[key], path, depth + 1);
+            }
+          }
+        }
+        convert(rawData, 'option', 0);
+        return {
+          seriesData: seriesData,
+          maxDepth: maxDepth
+        };
+      }
+      function initChart(seriesData, maxDepth) {
+        var displayRoot = stratify();
+        function stratify() {
+          return d3
+            .stratify()
+            .parentId(function (d) {
+              return d.id.substring(0, d.id.lastIndexOf('.'));
+            })(seriesData)
+            .sum(function (d) {
+              return d.value || 0;
+            })
+            .sort(function (a, b) {
+              return b.value - a.value;
+            });
+        }
+        function overallLayout(params, api) {
+          var context = params.context;
+          d3
+            .pack()
+            .size([api.getWidth() - 2, api.getHeight() - 2])
+            .padding(3)(displayRoot);
+          context.nodes = {};
+          displayRoot.descendants().forEach(function (node, index) {
+            context.nodes[node.id] = node;
+          });
+        }
+        function renderItem(params, api) {
+          var context = params.context;
+          // Only do that layout once in each time `setOption` called.
+          if (!context.layout) {
+            context.layout = true;
+            overallLayout(params, api);
+          }
+          var nodePath = api.value('id');
+          var node = context.nodes[nodePath];
+          if (!node) {
+            // Reder nothing.
+            return;
+          }
+          var isLeaf = !node.children || !node.children.length;
+          var focus = new Uint32Array(
+            node.descendants().map(function (node) {
+              return node.data.index;
+            })
+          );
+          var nodeName = isLeaf
+            ? nodePath
+                .slice(nodePath.lastIndexOf('.') + 1)
+                .split(/(?=[A-Z][^A-Z])/g)
+                .join('\n')
+            : '';
+          var z2 = api.value('depth') * 2;
+          return {
+            type: 'circle',
+            focus: focus,
+            shape: {
+              cx: node.x,
+              cy: node.y,
+              r: node.r
+            },
+            transition: ['shape'],
+            z2: z2,
+            textContent: {
+              type: 'text',
+              style: {
+                // transition: isLeaf ? 'fontSize' : null,
+                text: nodeName,
+                fontFamily: 'Arial',
+                width: node.r * 1.3,
+                overflow: 'truncate',
+                fontSize: node.r / 3
+              },
+              emphasis: {
+                style: {
+                  overflow: null,
+                  fontSize: Math.max(node.r / 3, 12)
+                }
+              }
+            },
+            textConfig: {
+              position: 'inside'
+            },
+            style: {
+              fill: api.visual('color')
+            },
+            emphasis: {
+              style: {
+                fontFamily: 'Arial',
+                fontSize: 12,
+                shadowBlur: 20,
+                shadowOffsetX: 3,
+                shadowOffsetY: 5,
+                shadowColor: 'rgba(0,0,0,0.3)'
+              }
+            }
+          };
+        }
+        option = {
+          dataset: {
+            source: seriesData
+          },
+          tooltip: {},
+          visualMap: [
+            {
+              show: false,
+              min: 0,
+              max: maxDepth,
+              dimension: 'depth',
+              inRange: {
+                color: ['#006edd', '#e0ffff']
+              }
+            }
+          ],
+          hoverLayerThreshold: Infinity,
+          series: {
+            type: 'custom',
+            renderItem: renderItem,
+            progressive: 0,
+            coordinateSystem: 'none',
+            encode: {
+              tooltip: 'value',
+              itemName: 'id'
+            }
+          }
+        };
+        myChart.setOption(option);
+        myChart.on('click', { seriesIndex: 0 }, function (params) {
+          drillDown(params.data.id);
+        });
+        function drillDown(targetNodeId) {
+          displayRoot = stratify();
+          if (targetNodeId != null) {
+            displayRoot = displayRoot.descendants().find(function (node) {
+              return node.data.id === targetNodeId;
+            });
+          }
+          // A trick to prevent d3-hierarchy from visiting parents in this algorithm.
+          displayRoot.parent = null;
+          myChart.setOption({
+            dataset: {
+              source: seriesData
+            }
+          });
+        }
+        // Reset: click on the blank area.
+        myChart.getZr().on('click', function (event) {
+          if (!event.target) {
+            drillDown();
+          }
+        });
+      }
+  
+      if (option && typeof option === 'object') {
+        myChart.setOption(option);
+      }
+  
+      window.addEventListener('resize', myChart.resize);
+    </script>
+
+    <div class="right" id="fp-nav">
+      <ul>
+        <li>
+          <a class="active" index="0">
+            <span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>厨房小家电行业的供应链获取辅助平台</title>
+    <meta name="Keywords" content="网络流量数据上传，数据可视化" />
+    <meta name="Description" content="," />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link rel="stylesheet" type="text/css" href="../static/css/sequences.css"/>
+    <link href="../static/css/csvfunction.css" type="text/css" rel="stylesheet" />
+    <script src="../static/js/user.js" type="text/javascript"></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <style>
+
+      .node {
+        cursor: pointer;
+      }
+      
+      .node:hover {
+        stroke: #000;
+        stroke-width: 1.5px;
+      }
+      
+      .node--leaf {
+        fill: white;
+      }
+      
+      .label {
+        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-anchor: middle;
+        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+      }
+      
+      .label,
+      .node--root,
+      .node--leaf {
+        pointer-events: none;
+      }
+
+      .node2 {
+        cursor: pointer;
+      }
+      
+      .node2:hover {
+        stroke: #000;
+        stroke-width: 1.5px;
+      }
+      
+      .node2--leaf {
+        fill: white;
+      }
+      
+      .label2 {
+        font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-anchor: middle;
+        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+      }
+      
+      .label2,
+      .node2--root,
+      .node2--leaf {
+        pointer-events: none;
+      }
+      
+      </style>
+    
+  </head>
+  
+  <body>
+    <div id="section" init="true" class="section section1">
+      <header class="header">
+        <div class="wrap">
+          <h1 class="fl">
+            <a href="/user" class="fl logo">
+              <img class="usericon" src="../static/img/user_head.jpg" alt="用户头像" width="49" height="49" />
+              <div class='userdata'>
+                <label>
+                  <div class='icon'>
+                    <img alt="" src='../static/img/user_icon_copy.png'>
+                    {{user[1]}}
+                  </div>
+                </label>
+                <label>
+                    <div class='icon'>
+                      <img alt="" src='../static/img/email_icon.png'>
+                      {{user[3]}}
+                    </div>
+                </label>
+                </div>
+            </a>
+          </h1>
+          <div class="fr">
+            <div class="top">
+              <span class="call">
+              </span>
+              <span class="call_tel">
+                188-9680-9086
+              </span>
+              <a>
+                <span class="email">
+                </span>
+                1369162653@qq.com
+              </a>
+              <a class="ewm">
+                <span class="weixin">
+                </span>
+                冯读硕
+                <img src="../static/img/weixin_code.jpg"
+                width="258" height="258" alt="微信" />
+              </a>
+            </div>
+            <nav class="nav">
+              <ul class="fix">
+                <li id="menu1">
+                  <a href="/user">
+                    系统首页
+                  </a>
+                </li>
+                <li id="menu2">
+                  <a href="/cases">
+                    实验案例
+                  </a>
+                </li>
+              </ul>
+              <span class="nav_icon">
+              </span>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <script type="text/javascript">
+        document.getElementById("menu2").className = "on";
+      </script>
+    </div>
+
+    <div class="news_tab">
+        <ul class="fix">
+          <li class="cyan">
+            <a href="/attacktype" >
+              <h2>
+                原材料
+              </h2>
+              <p class="eg">
+                Raw Materials
+              </p>
+            </a>
+          </li>
+          <li class="purple">
+            <a href="/attackips" >
+              <h2>
+                模具制作
+              </h2>
+              <p class="eg">
+                Mold Manufacturing
+              </p>
+            </a>
+          </li>
+          <li class="green">
+            <a href="/timestampip" >
+              <h2>
+                注塑生产
+              </h2>
+              <p class="eg">
+                Injection Molding Production
+              </p>
+            </a>
+          </li>
+          <li class="red">
+            <a href="/timestampother" >
+              <h2>
+                电子电路
+              </h2>
+              <p class="eg">
+                Electronic Circuit
+              </p>
+            </a>
+          </li>
+          <li class="blue">
+            <a href="/otherother">
+              <h2>
+                展览展会
+              </h2>
+              <p class="eg">
+                Exhibition
+              </p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    <div class="function_tab">
+        
+        <div class="fix" id="function_ul">
+            <div class="green" id="function_li">
+                <div class="input_filed"> -->
+                  
+                  <div id="main" width="850" height="750">
+                    <!-- 定义左上角页面访问序列的容器 -->
+                    <div id="sequence"></div>
+                    <!--定义图例所在容器 .以及切换是否显示的按钮-->
+                    <div id="sidebar">
+                      <input type="checkbox" id="togglelegend" style="left:20"> Legend<br/>
+                      <div id="legend" style="visibility: hidden;"></div>
+                    </div>
+                    <!-- 定义光芒图的容器 -->
+                    <div id="chart" width="750" height="750" style="border-radius: 50%;">
+                      <!-- 定义鼠标悬停时，解释说明文字所在的容器 ,默认隐藏-->
+                      <!-- <div id="explanation" style="visibility: hidden;">
+                        <span id="percentage"></span><br/>
+                        of visits begin with this sequence of pages
+                        
+                      </div> -->
+                      <svg id="zoomcircle" width="300" height="300" style="clip-path: circle(50%);"></svg>
+                    </div>
+                  </div>
+
+                  <div id="main2" width="850" height="750" style="visibility: hidden;">
+                    <!-- 定义左上角页面访问序列的容器 -->
+                    <div id="sequence2"></div>
+                    <!--定义图例所在容器 .以及切换是否显示的按钮-->
+                    <div id="sidebar2">
+                      <input type="checkbox" id="togglelegend2" style="left:20"> Legend<br/>
+                      <div id="legend2" style="visibility: hidden;"></div>
+                    </div>
+                    <!-- 定义光芒图的容器 -->
+                    <div id="chart2" width="750" height="750" style="border-radius: 50%;">
+                      <!-- 定义鼠标悬停时，解释说明文字所在的容器 ,默认隐藏-->
+                      <!-- <div id="explanation" style="visibility: hidden;">
+                        <span id="percentage"></span><br/>
+                        of visits begin with this sequence of pages
+                        
+                      </div> -->
+                      <svg id="zoomcircle2" width="300" height="300" style="clip-path: circle(50%);"></svg>
+                    </div>
+                  </div>                    
+                </div>
+            </div>
+        </div>
+
+        
+       
+    </div>
+
+    <script type="text/javascript">
+      // Hack to make this example display correctly in an iframe on bl.ocks.org
+      d3.select(self.frameElement).style("height", "700px");
+    </script> 
+    <!-- <script type="text/javascript" src="../static/js/ZoomableCirclePacking.js"></script> -->
+    <script type="text/javascript" src="../static/js/SequencesSunburst.js"></script>
+
+    
+
+    
+
+    <div class="right" id="fp-nav">
+      <ul>
+        <li>
+          <a class="active" index="0">
+            <span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+
+</html>

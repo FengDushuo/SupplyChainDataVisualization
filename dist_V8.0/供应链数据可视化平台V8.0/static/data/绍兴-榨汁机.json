@@ -1,0 +1,34 @@
+[
+    {
+        "address":"浙江省绍兴市",
+        "category":"榨汁机",
+        "ground":"冷镦模具,塑料制品",
+        "money":1000,
+        "name":"浙江锐固五金制造有限公司",
+        "property":""
+    },
+    {
+        "address":"浙江省绍兴市",
+        "category":"榨汁机",
+        "ground":"模具,塑料制品",
+        "money":100,
+        "name":"绍兴上虞锦科模塑有限公司",
+        "property":""
+    },
+    {
+        "address":"浙江省绍兴市",
+        "category":"榨汁机",
+        "ground":"塑料模具,塑料产品",
+        "money":10,
+        "name":"浙江嵊州市甘霖镇索奥模具厂",
+        "property":""
+    },
+    {
+        "address":"浙江省绍兴市",
+        "category":"榨汁机",
+        "ground":"模具",
+        "money":10,
+        "name":"嵊州市远程模具厂",
+        "property":""
+    }
+]

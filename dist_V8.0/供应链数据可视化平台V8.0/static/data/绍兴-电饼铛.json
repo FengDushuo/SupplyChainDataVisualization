@@ -1,0 +1,26 @@
+[
+    {
+        "address":"浙江省绍兴市",
+        "category":"电饼铛",
+        "ground":"模具制造、加工",
+        "money":1680,
+        "name":"浙江海太塑业有限公司",
+        "property":""
+    },
+    {
+        "address":"浙江省绍兴市",
+        "category":"电饼铛",
+        "ground":"塑料制品,塑料模具",
+        "money":200,
+        "name":"绍兴上虞凯诚塑业有限公司",
+        "property":""
+    },
+    {
+        "address":"浙江省绍兴市",
+        "category":"电饼铛",
+        "ground":"模具制造、加工,铣床加工(凡涉及许可证制度的凭证经营)",
+        "money":10,
+        "name":"上虞经济开发区顺达模具制造厂",
+        "property":""
+    }
+]
